@@ -1,4 +1,4 @@
-const loadPhone = async (search, isShowAll) => {
+const loadPhone = async (search='13', isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${search}`
   )
@@ -37,7 +37,7 @@ const displayPhones = (phones, isShowAll) => {
           <p class="text-2xl font-medium">${phone.slug}</p>
           <p class="text-3xl font-medium">$999</p>
           <div class="card-actions justify-center">
-            <button class="btn btn-primary">Show Details</button>
+            <button onclick="handleShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
           </div>
         </div>
         `;
@@ -68,3 +68,47 @@ const toggleLoadingSpinner = (isLoading) => {
 const handleShowAll = () => {
   handleSearch(true)
 }
+
+const handleShowDetails = async (id) => {
+  const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+  const data = await res.json();
+  // console.log(data)
+  const phone = data.data;
+  showPhoneDetails(phone)
+}
+
+const showPhoneDetails = (phone) => {
+
+  // const phoneName = document.getElementById('show-phone-details-name');
+  // phoneName.innerText = phone.name;
+
+  const showDetailsContainer = document.getElementById('show-details-container');
+  showDetailsContainer.innerHTML = `
+    <img src="${phone.image}"/>
+
+    <div class="space-y-4">
+    <h2 class="font-bold text-3xl">${phone.name}</h2>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Storage: </span>${phone?.mainFeatures?.storage}</p>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Display Size: </span>${phone?.mainFeatures?.displaySize}</p>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Chipset: </span>${phone?.mainFeatures?.chipSet}</p>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Memory: </span>${phone?.mainFeatures?.memory}</p>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Slug: </span>${phone?.slug}</p>
+
+    <p class="text-xl"><span class="text-2xl font-semibold">Release Date: </span>${phone?.releaseDate}</p>
+    
+    <p class="text-xl"><span class="text-2xl font-semibold">Brand: </span>${phone?.brand}</p>
+    </div>
+
+  `;
+
+  // show the modal
+  show_Details_Modal.showModal()
+  // console.log(phone)
+}
+
+loadPhone()
