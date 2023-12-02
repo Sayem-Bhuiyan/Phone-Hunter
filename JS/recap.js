@@ -36,10 +36,22 @@ const displayPhone = (phones) => {
         `;
         phoneContainer.appendChild(phoneCard)
     })
+    toggleLoadingSpinner(false)
 }
 
 const handleSearch = () => {
+  toggleLoadingSpinner(true)
     const searchField = document.getElementById('search-input');
     const searchText = searchField.value;
     loadData(searchText);
+}
+
+const toggleLoadingSpinner = (isLoading) => {
+  const loadingSpinner = document.getElementById('loading-spinner')
+  if(isLoading){
+    loadingSpinner.classList.remove('hidden')
+  }
+  else{
+    loadingSpinner.classList.add('hidden')
+  }
 }

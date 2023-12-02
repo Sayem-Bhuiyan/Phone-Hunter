@@ -11,11 +11,15 @@
 </head>
 <body>
     <main class="container mx-auto mt-8">
-        <section>
+        <section class="mb-10">
             <input id="search-input" type="text" placeholder="Search here" class="input bg-gray-300 w-full max-w-xs" />
             <button onclick="handleSearch()" class="btn btn-accent">Search</button>
         </section>
         <section>
+            <!-- loading spinner -->
+            <div id="loading-spinner" class="text-center my-40 hidden">
+                <span class="loading loading-dots loading-lg"></span>
+            </div>
             <div id="phones-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
             </div>
